@@ -21,6 +21,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
           
       - name: Run Orca SAST Scan
+        id: orca-sast-scan
         uses: orcasecurity/shiftleft-sast-action@v1
         with:
           api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
@@ -30,7 +31,7 @@ jobs:
             "."
 
       - name: notify on slack
-        if: ${{ always() && steps.orca-cve-check.outputs.exit_code == 3 }}
+        if: ${{ always() && steps.orca-sast-scan.outputs.exit_code == 3 }}
         run: |
           set +e
           ./.github/scripts/slackSummary.sh ${{ secrets.SLACK_TOKEN }} orca_results/sast.json "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
