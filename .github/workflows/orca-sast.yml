@@ -25,3 +25,12 @@ jobs:
           path:
             # scanning the entire repository
             "."
+            
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: notify on slack
+        if: ${{ always() && steps.orca-cve-check.outputs.exit_code == 3 }}
+        run: |
+          set +e
+          ./.github/scripts/slackSummary.sh ${{ secrets.SLACK_TOKEN }} orca_results/sast.json "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
