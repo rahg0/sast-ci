@@ -36,4 +36,4 @@ jobs:
         if: ${{ always() && steps.orca-sast-scan.outputs.exit_code == 3 }}
         with:
           name: orca-shiftleft-scan-json
-          path: results/sast.json
+          path: orca_results/sast.json
