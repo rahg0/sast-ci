@@ -34,7 +34,7 @@ jobs:
             "."
 
       - name: Upload JSON file as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() && steps.orca-sast-scan.outputs.exit_code == 3 }}
         with:
           name: orca-shiftleft-scan-json
