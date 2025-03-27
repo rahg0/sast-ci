@@ -30,8 +30,9 @@ jobs:
             # scanning the entire repository
             "."
 
-      - name: notify on slack
+      - name: Upload JSON file as artifact
+        uses: actions/upload-artifact@v3
         if: ${{ always() && steps.orca-sast-scan.outputs.exit_code == 3 }}
-        run: |
-          set +e
-          ./.github/scripts/slackSummary.sh ${{ secrets.SLACK_TOKEN }} orca_results/sast.json "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        with:
+          name: orca-shiftleft-scan-json
+          path: results/sast.json
