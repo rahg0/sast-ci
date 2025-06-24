@@ -17,9 +17,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-          
       - name: Run Orca SAST Scan
         id: orca-sast-scan
         uses: orcasecurity/shiftleft-sast-action@v1
