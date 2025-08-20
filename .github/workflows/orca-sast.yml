@@ -38,11 +38,15 @@ jobs:
         run: |
           pwd
           mkdir orca-logs
+          mkdir -p /tmp/orca-logs
+          mkdir -p $HOME/orca-logs
           ls -al
-          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} fs scan "." --debug --log-path "${{ github.workspace }}"/orca-logs --exit-code 0
           orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs --exit-code 0
-          ls -al "./orca-logs"
-          ls -al "${{ github.workspace }}"
+          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path /tmp/orca-logs --exit-code 0
+          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path $HOME/orca-logs --exit-code 0
+  
+                   
           ls -al "${{ github.workspace }}"/orca-logs
-          find ${{ github.workspace }} -name "*.log" -type f 2>/dev/null || echo "No logs found anywhere"
+          ls -la /tmp/orca-logs
+          ls -lha $HOME/orca-logs
           
