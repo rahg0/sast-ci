@@ -17,21 +17,31 @@ jobs:
         with:
           fetch-depth: 0
           
+      #- name: Run Orca SAST Scan
+      #  id: orca-sast-scan
+      #  uses: orcasecurity/shiftleft-sast-action@v1
+      #  with:
+      #    api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
+      #    project_key: ${{ env.PROJECT_KEY }}
+      #    debug: true
+      #    log_path: orca_results/
+      #    exit_code: 0
+      #    path:
+      #      "." 
+      
+      - name: Install Orca CLI
+        run: |
+          curl -sfL 'https://raw.githubusercontent.com/orcasecurity/orca-cli/main/install.sh' | bash -s
+          echo "/usr/local/bin/orca-cli" >> $GITHUB_PATH
+          
       - name: Run Orca SAST Scan
-        id: orca-sast-scan
-        uses: orcasecurity/shiftleft-sast-action@v1
-        with:
-          api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
-          project_key: ${{ env.PROJECT_KEY }}
-          debug: true
-          log_path: orca_results/
-          exit_code: 0
-          path:
-            "." 
-      - name: Listing
         run: |
           pwd
-          ls -lah 
-          ls -lah orca_results
-          cat orca_results/sast*
+          mkdir orca-logs
+          ls -al
+          orca-cli -p ${{ env.PROJECT_KEY }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs | ls -al "${{ github.workspace }}"/orca-logs
+          ls -al "./orca-logs"
+          ls -al "${{ github.workspace }}"
+          ls -al "${{ github.workspace }}"/orca-logs
+          find ${{ github.workspace }} -name "*.log" -type f 2>/dev/null || echo "No logs found anywhere"
           
