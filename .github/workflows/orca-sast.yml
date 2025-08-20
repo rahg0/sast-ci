@@ -23,5 +23,11 @@ jobs:
         with:
           api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
           project_key: ${{ env.PROJECT_KEY }}
+          debug: true
           path:
             "." 
+      - name: Listing
+        run: |
+          ls -lah
+          cat sast*
+          
