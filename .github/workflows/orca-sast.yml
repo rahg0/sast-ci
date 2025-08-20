@@ -30,8 +30,7 @@ jobs:
       - name: Listing
         run: |
           pwd
-          ls -lah
-          cd /github/workspace
-          ls -lah
-          cat sast*
+          ls -lah 
+          ls -lah orca_results
+          cat orca_results/sast*
           
