@@ -39,7 +39,7 @@ jobs:
           pwd
           mkdir orca-logs
           ls -al
-          orca-cli -p ${{ env.PROJECT_KEY }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs
+          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs
           ls -al "./orca-logs"
           ls -al "${{ github.workspace }}"
           ls -al "${{ github.workspace }}"/orca-logs
