@@ -29,6 +29,9 @@ jobs:
             "." 
       - name: Listing
         run: |
+          pwd
+          ls -lah
+          cd /github/workspace
           ls -lah
           cat sast*
           
