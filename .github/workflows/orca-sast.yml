@@ -24,7 +24,7 @@ jobs:
           api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
           project_key: ${{ env.PROJECT_KEY }}
           debug: true
-          log_path: debug_results/
+          log_path: orca_results/
           exit_code: 0
           path:
             "." 
@@ -32,6 +32,6 @@ jobs:
         run: |
           pwd
           ls -lah 
-          ls -lah debug_results
-          cat debug_results/sast*
+          ls -lah orca_results
+          cat orca_results/sast*
           
