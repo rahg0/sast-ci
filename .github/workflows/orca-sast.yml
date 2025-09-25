@@ -43,8 +43,6 @@ jobs:
           chmod -R 755 ${{ github.workspace }}/orca-logs
           chmod -R 755 $HOME/orca-logs
           chmod -R 755 /tmp/orca-logs
-
-
           
           ls -al
           orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs --exit-code 0
