@@ -17,40 +17,39 @@ jobs:
         with:
           fetch-depth: 0
           
-      #- name: Run Orca SAST Scan
-      #  id: orca-sast-scan
-      #  uses: orcasecurity/shiftleft-sast-action@v1
-      #  with:
-      #    api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
-      #    project_key: ${{ env.PROJECT_KEY }}
-      #    debug: true
-      #    log_path: orca_results/
-      #    exit_code: 0
-      #    path:
-      #      "." 
-      
-      - name: Install Orca CLI
-        run: |
-          curl -sfL 'https://raw.githubusercontent.com/orcasecurity/orca-cli/main/install.sh' | bash -s
-          echo "/usr/local/bin/orca-cli" >> $GITHUB_PATH
-          
       - name: Run Orca SAST Scan
-        run: |
-          pwd
-          mkdir orca-logs
-          mkdir -p /tmp/orca-logs
-          mkdir -p $HOME/orca-logs
-          chmod -R 755 ${{ github.workspace }}/orca-logs
-          chmod -R 755 $HOME/orca-logs
-          chmod -R 755 /tmp/orca-logs
-          
-          ls -al
-          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs --exit-code 0
-          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path /tmp/orca-logs --exit-code 0
-          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path $HOME/orca-logs --exit-code 0
-  
-                   
-          ls -al "${{ github.workspace }}"/orca-logs
-          ls -la /tmp/orca-logs
-          ls -lha $HOME/orca-logs
-          
+        id: orca-sast-scan
+        uses: orcasecurity/shiftleft-sast-action@v1
+        with:
+          api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
+          project_key: ${{ env.PROJECT_KEY }}
+          debug: true
+          log_path: orca_results/
+          exit_code: 0
+          path:
+            "." 
+      
+     # - name: Install Orca CLI
+#        run: |
+#          curl -sfL 'https://raw.githubusercontent.com/orcasecurity/orca-cli/main/install.sh' | bash -s
+#          echo "/usr/local/bin/orca-cli" >> $GITHUB_PATH
+#          
+#      - name: Run Orca SAST Scan
+#        run: |
+#          pwd
+#          mkdir orca-logs
+#          mkdir -p /tmp/orca-logs
+#          mkdir -p $HOME/orca-logs
+#          chmod -R 755 ${{ github.workspace }}/orca-logs
+#          chmod -R 755 $HOME/orca-logs
+#          chmod -R 755 /tmp/orca-logs
+#          
+#          ls -al
+#          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path "${{ github.workspace }}"/orca-logs --exit-code 0
+#          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path /tmp/orca-logs --exit-code 0
+#          orca-cli -p ${{ env.PROJECT_KEY }} -k ${{ secrets.ORCA_SECURITY_API_TOKEN }} sast scan "." --debug --log-path $HOME/orca-logs --exit-code 0
+#  
+#                   
+#          ls -al "${{ github.workspace }}"/orca-logs
+#          ls -la /tmp/orca-logs
+#          ls -lha $HOME/orca-logs
