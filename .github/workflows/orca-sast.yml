@@ -27,7 +27,7 @@ jobs:
           log_path: orca_results/
           exit_code: 0
           path:
-            "." 
+            "./" 
        
      # - name: Install Orca CLI
 #        run: |
