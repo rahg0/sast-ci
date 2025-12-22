@@ -25,7 +25,6 @@ jobs:
           project_key: ${{ env.PROJECT_KEY }}
           debug: true
           log_path: orca_results/
-          exit_code: 0
           path:
             "./" 
        
