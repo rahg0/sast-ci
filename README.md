@@ -1,2 +1,1 @@
 # sast-ci
-gg 
