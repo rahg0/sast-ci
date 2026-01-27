@@ -1,9 +1,9 @@
 name: Sample Orca SAST Scan Workflow
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "prod"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "prod" ]
  
 jobs: 
   orca-sast_scan:
