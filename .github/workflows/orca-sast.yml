@@ -26,6 +26,8 @@ jobs:
           project_key: ${{ env.PROJECT_KEY }}
           debug: true
           log_path: orca_results/
+          format: cli
+          output: results/
           path:
             "service/" 
 
@@ -44,6 +46,11 @@ jobs:
 
             Repo: ${{ github.repository }}
             Commit: ${{ github.sha }}
+            ==============================
+            Scan Output (truncated):
+            ==============================
+            
+            $(sed -n '1,200p' results/sast)
           to: raghu.esh@gmail.com
           from: GitHub Actions <ci@example.com>
           
