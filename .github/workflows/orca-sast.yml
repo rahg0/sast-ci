@@ -32,7 +32,8 @@ jobs:
             "service/" 
 
       - name: Send email if vulnerabilities found
-        if: always()
+        if: ${{ always() && steps.orca_sast_scan.outputs.exit_code == 3 }}
+        #if: always()
         # if: steps.orca_sast_scan.outcome == 'failure'
         uses: dawidd6/action-send-mail@v3
         with:
