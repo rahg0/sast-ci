@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
           
       - name: Run Orca SAST Scan
-        id: orca-sast-scan
+        id: orca_sast_scan
         uses: orcasecurity/shiftleft-sast-action@v1
         with:
           api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
@@ -27,6 +27,24 @@ jobs:
           log_path: orca_results/
           path:
             "service/" 
+
+      - name: Send email if vulnerabilities found
+        if: steps.orca_sast_scan.outcome == 'failure'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "🚨 Orca Security Alert"
+          body: |
+            Vulnerabilities detected by Orca CLI.
+
+            Repo: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+          to: raghu.esh@gmail.com
+          from: GitHub Actions <ci@example.com>
+          
        
      # - name: Install Orca CLI
 #        run: |
