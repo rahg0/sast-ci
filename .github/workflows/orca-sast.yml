@@ -46,7 +46,7 @@ jobs:
 
             Repo: ${{ github.repository }}
             Commit: ${{ github.sha }}
-          body_file: results/sast
+          attachments: results/sast
           to: raghu.esh@gmail.com
           from: GitHub Actions <ci@example.com>
           
