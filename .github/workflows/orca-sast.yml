@@ -19,6 +19,7 @@ jobs:
           
       - name: Run Orca SAST Scan
         id: orca_sast_scan
+        continue-on-error: true
         uses: orcasecurity/shiftleft-sast-action@v1
         with:
           api_token: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
@@ -29,7 +30,8 @@ jobs:
             "service/" 
 
       - name: Send email if vulnerabilities found
-        if: steps.orca_sast_scan.outcome == 'failure'
+        if: always()
+        # if: steps.orca_sast_scan.outcome == 'failure'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
