@@ -27,6 +27,14 @@ jobs:
           log_path: orca_results/
           path:
             "service/" 
+            
+      - name: Orca Debugs
+        uses: actions/upload-artifact@v4
+        if: ${{ always() && steps.orca-sast-scan.outputs.exit_code != 0 }}
+        with:
+          name: orca-debugs
+          path: |
+            orca_results
        
      # - name: Install Orca CLI
 #        run: |
