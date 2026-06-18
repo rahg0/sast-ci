@@ -31,25 +31,25 @@ jobs:
           path:
             "service/" 
 
-      - name: Send email if vulnerabilities found
-        if: ${{ always() && steps.orca_sast_scan.outputs.exit_code == 3 }}
-        #if: always()
-        # if: steps.orca_sast_scan.outcome == 'failure'
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "🚨 Orca Security Alert"
-          body: |
-            Vulnerabilities detected by Orca CLI.
-
-            Repo: ${{ github.repository }}
-            Commit: ${{ github.sha }}
-          attachments: results/sast
-          to: raghu.esh@gmail.com
-          from: GitHub Actions <ci@example.com>
+      #- name: Send email if vulnerabilities found
+      #  if: ${{ always() && steps.orca_sast_scan.outputs.exit_code == 3 }}
+      #  #if: always()
+      #  # if: steps.orca_sast_scan.outcome == 'failure'
+      #  uses: dawidd6/action-send-mail@v3
+      #  with:
+      #    server_address: smtp.gmail.com
+      #    server_port: 587
+      #    username: ${{ secrets.SMTP_USERNAME }}
+      #    password: ${{ secrets.SMTP_PASSWORD }}
+      #    subject: "🚨 Orca Security Alert"
+      #    body: |
+      #      Vulnerabilities detected by Orca CLI.
+#
+      #      Repo: ${{ github.repository }}
+      #      Commit: ${{ github.sha }}
+      #    attachments: results/sast
+      #    to: raghu.esh@gmail.com
+      #    from: GitHub Actions <ci@example.com>
           
        
      # - name: Install Orca CLI
